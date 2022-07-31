@@ -1,1 +1,1 @@
-GET http://localhost:3001/api/persons
+GET https://intense-thicket-05424.herokuapp.com/api/persons
