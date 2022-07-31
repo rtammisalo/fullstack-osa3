@@ -4,6 +4,8 @@ const app = express()
 
 app.use(express.json())
 app.use(morgan('tiny'))
+morgan.token('post-data', (req, res) => JSON.stringify(req.body))
+app.use(morgan(':post-data', { skip: (req, res) => req.method !== 'POST' }))
 
 let persons = [
   {
@@ -52,7 +54,6 @@ const generateNewId = () => {
 }
 
 app.post('/api/persons', (req, res) => {
-  error = ''
   if (!req.body.name) {
     return res.status(400).json({ error: 'missing name' })
   }
