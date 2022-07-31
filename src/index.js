@@ -1,7 +1,10 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
+
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 app.use(morgan('tiny'))
 morgan.token('post-data', (req, res) => JSON.stringify(req.body))
@@ -45,8 +48,14 @@ app.get('/api/persons/:id', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-  persons = persons.filter(person => person.id !== Number(req.params.id))
-  res.status(204).end()
+  selectedPerson = persons.find(person => person.id === Number(req.params.id))
+
+  if (selectedPerson) {
+    persons = persons.filter(person => person.id !== selectedPerson.id)
+    res.status(204).end()
+  } else {
+    res.status(404).end()
+  }
 })
 
 const generateNewId = () => {
