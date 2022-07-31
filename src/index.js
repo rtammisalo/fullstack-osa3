@@ -50,11 +50,15 @@ const generateNewId = () => {
 }
 
 app.post('/api/persons', (req, res) => {
+  error = ''
   if (!req.body.name) {
     return res.status(400).json({ error: 'missing name' })
   }
   if (!req.body.number) {
     return res.status(400).json({ error: 'missing number' })
+  }
+  if (persons.find(person => person.name === req.body.name)) {
+    return res.status(400).json({ error: 'name must be unique' })
   }
 
   const person = {
