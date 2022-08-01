@@ -1,1 +1,6 @@
 DELETE https://intense-thicket-05424.herokuapp.com/api/persons/2
+
+
+// Localhost
+###
+DELETE http://localhost:3001/api/persons/62e81f476a54a99f2ee7cdb3

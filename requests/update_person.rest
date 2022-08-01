@@ -1,0 +1,25 @@
+// Localhost
+PUT http://localhost:3001/api/persons/62e82861b66f6a92a0a9a65d
+Content-Type: application/json
+
+{
+    "name": "Sid Meier",
+    "number": "01-12-3456789"
+}
+
+### // Missing number
+PUT http://localhost:3001/api/persons/62e82861b66f6a92a0a9a65d
+Content-Type: application/json
+
+{
+    "name": "Sid Meier"
+}
+
+### // Malformatted
+PUT http://localhost:3001/api/persons/6
+Content-Type: application/json
+
+{
+    "name": "Sid Meier",
+    "number": "11-22-33445566"
+}

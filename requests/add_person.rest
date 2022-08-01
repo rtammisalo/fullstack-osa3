@@ -39,3 +39,27 @@ Content-Type: application/json
     "name": "Isaac Asimov",
     "number": "11-22-334455"
 }
+
+### Missing name
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "number": "11-22-334455"
+}
+
+### Missing number
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Isaac Asimov"
+}
+
+### No content
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+
+}
