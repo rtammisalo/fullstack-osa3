@@ -29,3 +29,13 @@ Content-Type: application/json
 {
 
 }
+
+
+### Localhost
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Isaac Asimov",
+    "number": "11-22-334455"
+}
