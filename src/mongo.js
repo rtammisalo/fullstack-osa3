@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const process = require('node:process')
 
 if (process.argv.length < 3) {
   console.log('Argument, DB password, is missing')
@@ -37,14 +38,14 @@ const addPerson = () => {
 
   person
     .save()
-    .then(result => {
+    .then(() => {
       console.log(`Added ${name} number ${number} to phonebook`)
       mongoose.connection.close()
     })
 }
 
-if (process.argv.length == 3) {
+if (process.argv.length === 3) {
   getAll()
-} else if (process.argv.length == 5) {
+} else if (process.argv.length === 5) {
   addPerson()
 }

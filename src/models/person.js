@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
+const process = require('node:process')
 
 const DBUri = process.env.MONGODB_URI
 
 mongoose
   .connect(DBUri)
-  .then(result => {
+  .then(() => {
     console.log('Connected to database')
   })
   .catch(error => {

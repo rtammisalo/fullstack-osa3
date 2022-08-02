@@ -3,6 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const PersonModel = require('./models/person')
+const process = require('node:process')
 
 const app = express()
 
@@ -10,8 +11,8 @@ app.use(cors({ crossorigin: true })) // Add crossorigin for frontend access to e
 app.use(express.static('build'))
 app.use(express.json())
 app.use(morgan('tiny'))
-morgan.token('post-data', (req, res) => JSON.stringify(req.body))
-app.use(morgan(':post-data', { skip: (req, res) => req.method !== 'POST' }))
+morgan.token('post-data', (req) => JSON.stringify(req.body))
+app.use(morgan(':post-data', { skip: (req) => req.method !== 'POST' }))
 
 app.get('/info', (req, res) => {
   PersonModel
