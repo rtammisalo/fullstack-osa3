@@ -12,8 +12,22 @@ mongoose
   })
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String
+  name: {
+    type: String,
+    minlength: 3,
+    required: true
+  },
+  number: {
+    type: String,
+    minlength: 8,
+    validate: {
+      validator: num => {
+        return /^\d{2,3}-\d{4,}$/.test(num)
+      },
+      message: input => `${input.value} is not valid (xx[x]-xxxxx...)`
+    },
+    required: true
+  }
 })
 
 personSchema.set('toJSON', {

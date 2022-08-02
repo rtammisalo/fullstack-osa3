@@ -56,24 +56,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
     .catch(error => next(error))
 })
 
-const personDataInputError = (req, res, next) => {
-  if (req.method.toUpperCase() !== 'POST'
-    && req.method.toUpperCase() !== 'PUT') {
-    next()
-  }
-
-  if (!req.body.name) {
-    return res.status(400).json('missing name')
-  }
-  if (!req.body.number) {
-    return res.status(400).json('missing number')
-  }
-  next()
-}
-
-app.use(personDataInputError)
-
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   PersonModel
     .findOne({ name: req.body.name })
     .then(result => {
@@ -91,6 +74,7 @@ app.post('/api/persons', (req, res) => {
         .then(savedPerson => {
           res.json(savedPerson)
         })
+        .catch(error => next(error))
     })
 })
 
@@ -100,7 +84,11 @@ app.put('/api/persons/:id', (req, res, next) => {
   }
 
   PersonModel
-    .findByIdAndUpdate(req.params.id, person, { new: true })
+    .findByIdAndUpdate(req.params.id, person, {
+      new: true,
+      runValidators: true,
+      context: 'query'
+    })
     .then(updatedPerson => {
       res.json(updatedPerson)
     })
@@ -119,6 +107,8 @@ const errorHandler = (error, request, response, next) => {
   switch (error.name) {
     case 'CastError':
       return response.status(400).send('malformed input')
+    case 'ValidationError':
+      return response.status(400).json(error.message)
   }
 
   next(error)
